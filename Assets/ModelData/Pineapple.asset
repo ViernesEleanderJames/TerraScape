@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelName: Pineapple
   modelImage: {fileID: 0}
-  modelPrefab: {fileID: 6785153261506947838, guid: d0dc904c152bb774e9c954fb4d767f8b, type: 3}
+  modelPrefab: {fileID: 75671391132820933, guid: c415fb215ee3d1e4697f02c771615941, type: 3}

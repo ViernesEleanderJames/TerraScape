@@ -3,7 +3,22 @@ guid: b4f4d5482044f6843877d375f7140ac3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Ground048_2K-JPG_Color
+    second: {fileID: 2800000, guid: 2f86234b8c9e4b24d88bb1c2eb3f440c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Ground048_2K-JPG_NormalGL
+    second: {fileID: 2800000, guid: 2434b95f84d7bab4b9166c115fbd19ac, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Ground048_2K-JPG_Roughness
+    second: {fileID: 2800000, guid: 901e8ed087549a04bb3a65df262d040e, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

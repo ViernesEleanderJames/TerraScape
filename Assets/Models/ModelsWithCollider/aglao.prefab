@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8428837597548072523
+--- !u!1001 &8739459137744677195
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: fda2ff8ebeb8ec94189e487bd85ae06f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 238.89107
+      value: 291.12106
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fda2ff8ebeb8ec94189e487bd85ae06f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 492.2806
+      value: 437.74744
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fda2ff8ebeb8ec94189e487bd85ae06f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -573.3119
+      value: -935.4517
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fda2ff8ebeb8ec94189e487bd85ae06f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -58,20 +58,20 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fda2ff8ebeb8ec94189e487bd85ae06f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1215160118413751358}
+      addedObject: {fileID: 6890871208147130753}
   m_SourcePrefab: {fileID: 100100000, guid: fda2ff8ebeb8ec94189e487bd85ae06f, type: 3}
---- !u!1 &8662769484710441754 stripped
+--- !u!1 &8469478806235452442 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fda2ff8ebeb8ec94189e487bd85ae06f, type: 3}
-  m_PrefabInstance: {fileID: 8428837597548072523}
+  m_PrefabInstance: {fileID: 8739459137744677195}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1215160118413751358
+--- !u!65 &6890871208147130753
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8662769484710441754}
+  m_GameObject: {fileID: 8469478806235452442}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

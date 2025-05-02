@@ -3,15 +3,29 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
+using UnityEngine.UI;
 
 public class ARRaycastPlace : MonoBehaviour
 {
+    [Header("AR Components")]
     public ARRaycastManager raycastManager;
     public Camera arCamera;
-    private List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
-    private GameObject selectedModelPrefab; // Model selected from UI
-    private GameObject selectedObject;      // Currently selected placed model
+    [Header("UI Components")]
+    [SerializeField] private Button deleteButton;
+
+    private List<ARRaycastHit> hits = new List<ARRaycastHit>();
+    private GameObject selectedModelPrefab;
+    private GameObject selectedObject;
+
+    private void Start()
+    {
+        if (deleteButton != null)
+        {
+            deleteButton.gameObject.SetActive(false);
+            deleteButton.onClick.AddListener(DeleteSelectedObject);
+        }
+    }
 
     void Update()
     {
@@ -24,16 +38,7 @@ public class ARRaycastPlace : MonoBehaviour
 
             if (touch.phase == TouchPhase.Began)
             {
-                Debug.Log("Touch detected at: " + touch.position);
-
-                // 1️⃣ First, Try Selecting an Existing Model
-                if (TrySelectPlacedModel(touch.position)) 
-                {
-                    Debug.Log("✅ Selected existing model: " + selectedObject.name);
-                    return; // Exit early if selection is successful
-                }
-
-                // 2️⃣ If No Selection, Try Placing a New Model
+                if (TrySelectPlacedModel(touch.position)) return;
                 TryPlaceNewModel(touch.position);
             }
             else if (touch.phase == TouchPhase.Moved && selectedObject != null)
@@ -46,66 +51,56 @@ public class ARRaycastPlace : MonoBehaviour
     private bool TrySelectPlacedModel(Vector2 touchPosition)
     {
         Ray ray = arCamera.ScreenPointToRay(touchPosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
-
-            if (hit.collider.CompareTag("ARModel")) // Ensure models have this tag
+            if (hit.collider.CompareTag("ARModel"))
             {
+                ClearPreviousHighlight(); // 🔥 Clear previous model highlight
                 selectedObject = hit.collider.gameObject;
-                Debug.Log("🎯 Selected: " + selectedObject.name);
+                HighlightSelected(selectedObject); // 🔥 Highlight new selected model
+                deleteButton?.gameObject.SetActive(true);
                 return true;
             }
         }
-
-        Debug.Log("❌ No model selected");
         return false;
     }
 
     private void TryPlaceNewModel(Vector2 touchPosition)
     {
         if (selectedModelPrefab == null)
-        {
-            Debug.LogError("❌ No model selected to place.");
             return;
-        }
 
-        // 1️⃣ Raycast against existing objects for SnapPoint
         Ray ray = arCamera.ScreenPointToRay(touchPosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            GameObject hitObject = hit.collider.gameObject;
-
-            if (hitObject.CompareTag("ARModel"))
+            if (hit.collider.CompareTag("ARModel"))
             {
-                Transform snapPoint = hitObject.transform.Find("SnapPoint");
+                Transform snapPoint = hit.collider.transform.Find("SnapPoint");
                 if (snapPoint != null)
                 {
                     GameObject newObject = Instantiate(selectedModelPrefab, snapPoint.position, snapPoint.rotation);
-
                     if (newObject.GetComponent<Collider>() == null)
                         newObject.AddComponent<BoxCollider>();
-
                     newObject.tag = "ARModel";
-                    Debug.Log("📌 Snapped model to SnapPoint on: " + hitObject.name);
-                    return;
                 }
+                else
+                {
+                    GameObject newObject = Instantiate(selectedModelPrefab, hit.point, Quaternion.identity);
+                    if (newObject.GetComponent<Collider>() == null)
+                        newObject.AddComponent<BoxCollider>();
+                    newObject.tag = "ARModel";
+                }
+                return;
             }
         }
 
-        // 2️⃣ If no SnapPoint, place on detected AR plane
         if (raycastManager.Raycast(touchPosition, hits, TrackableType.Planes))
         {
             Pose hitPose = hits[0].pose;
             GameObject newObject = Instantiate(selectedModelPrefab, hitPose.position, hitPose.rotation);
-
             if (newObject.GetComponent<Collider>() == null)
                 newObject.AddComponent<BoxCollider>();
-
             newObject.tag = "ARModel";
-            Debug.Log("🚀 Placed new model on AR plane: " + newObject.name);
         }
     }
 
@@ -116,13 +111,39 @@ public class ARRaycastPlace : MonoBehaviour
             Pose hitPose = hits[0].pose;
             selectedObject.transform.position = hitPose.position;
             selectedObject.transform.rotation = hitPose.rotation;
-            Debug.Log("🔄 Moved object: " + selectedObject.name);
         }
     }
 
     public void SetSelectedModel(GameObject modelPrefab)
     {
         selectedModelPrefab = modelPrefab;
-        Debug.Log("📌 Model selected from UI: " + selectedModelPrefab.name);
+    }
+
+    public void DeleteSelectedObject()
+    {
+        if (selectedObject != null)
+        {
+            Destroy(selectedObject);
+            selectedObject = null;
+            deleteButton?.gameObject.SetActive(false);
+        }
+    }
+
+    // 🟡 Highlighting Methods
+    private void HighlightSelected(GameObject obj)
+    {
+        var outline = obj.GetComponent<Outline>();
+        if (outline != null)
+            outline.enabled = true;
+    }
+
+    private void ClearPreviousHighlight()
+    {
+        if (selectedObject != null)
+        {
+            var outline = selectedObject.GetComponent<Outline>();
+            if (outline != null)
+                outline.enabled = false;
+        }
     }
 }

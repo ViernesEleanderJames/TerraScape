@@ -3,7 +3,27 @@ guid: fda2ff8ebeb8ec94189e487bd85ae06f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: cba7cbb8-7add-4b6c-9e6b-f0666b851ab1
+    second: {fileID: 2800000, guid: 1747f41545d7d6748a71c822cd1cc35f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: forest_floor_diff_2k
+    second: {fileID: 2800000, guid: 0835b20b26a99aa4e90d56c866365701, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: forest_floor_nor_gl_2k
+    second: {fileID: 2800000, guid: 731e8d10c1d25e44da36825b1c877f83, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: forest_floor_rough_2k
+    second: {fileID: 2800000, guid: d22cf4d30f0b9e745a8a099719e50e04, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
