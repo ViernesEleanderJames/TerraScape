@@ -59,6 +59,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5c27b4fb0cbda774fa2d6a3dc8496570, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7465052193548845146}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5c27b4fb0cbda774fa2d6a3dc8496570, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7006858055095468090}
   m_SourcePrefab: {fileID: 100100000, guid: 5c27b4fb0cbda774fa2d6a3dc8496570, type: 3}
 --- !u!1 &3586542098595003669 stripped
 GameObject:
@@ -86,3 +89,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-7006858055095468090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3586542098595003669}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.008588195, g: 1, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

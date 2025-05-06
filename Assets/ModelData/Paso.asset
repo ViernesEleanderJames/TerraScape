@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Paso
   m_EditorClassIdentifier: 
   modelName: Paso
-  modelImage: {fileID: 21300000, guid: fd2b61294c9a15c4da23f2b0c9cbd39b, type: 3}
-  modelPrefab: {fileID: 3258964023876895548, guid: ecd5b52ae06c1134f8d6f76e36644b3a, type: 3}
+  modelImage: {fileID: 0}
+  modelPrefab: {fileID: 3047469448645969595, guid: ecd5b52ae06c1134f8d6f76e36644b3a, type: 3}

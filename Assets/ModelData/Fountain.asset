@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelName: Fountain
   modelImage: {fileID: 0}
-  modelPrefab: {fileID: 8242402136654223721, guid: 2afd6c0644468314999603231db8b981, type: 3}
+  modelPrefab: {fileID: 957098259384955970, guid: c00bafcf2725fa24ca850a23456b4acf, type: 3}

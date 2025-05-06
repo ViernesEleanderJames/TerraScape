@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f670137ffb621941b9714cbfbead799, type: 3}
+  m_Name: Rectangle Vase
+  m_EditorClassIdentifier: 
+  modelName: Rectangle Vase
+  modelImage: {fileID: 0}
+  modelPrefab: {fileID: 5659745375833750394, guid: 5e5e6d3ab0eed9c4f9ab8a1d50d7cf11, type: 3}
