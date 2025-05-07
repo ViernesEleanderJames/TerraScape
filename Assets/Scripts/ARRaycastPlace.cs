@@ -18,6 +18,11 @@ public class ARRaycastPlace : MonoBehaviour
     private GameObject selectedModelPrefab;
     private GameObject selectedObject;
 
+    private float initialDistance;
+    private float initialScale;
+    private Vector2 initialTouch1Position;
+    private Vector2 initialTouch2Position;
+
     private void Start()
     {
         if (deleteButton != null)
@@ -31,21 +36,90 @@ public class ARRaycastPlace : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            Touch touch = Input.GetTouch(0);
+            Touch touch1 = Input.GetTouch(0);
+            Touch touch2 = (Input.touchCount > 1) ? Input.GetTouch(1) : default;
 
-            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            // Ignore touch input if it's on UI
+            if (EventSystem.current.IsPointerOverGameObject(touch1.fingerId) || (Input.touchCount > 1 && EventSystem.current.IsPointerOverGameObject(touch2.fingerId)))
                 return;
 
-            if (touch.phase == TouchPhase.Began)
+            // Handling touch interactions after selecting a model
+            if (selectedObject != null)
             {
-                if (TrySelectPlacedModel(touch.position)) return;
-                TryPlaceNewModel(touch.position);
+                // Move model with a single touch
+                if (Input.touchCount == 1 && touch1.phase == TouchPhase.Moved)
+                {
+                    MoveSelectedModel(touch1.position);
+                }
+
+                // Resize or rotate the model with two touches
+                if (Input.touchCount == 2)
+                {
+                    if (touch1.phase == TouchPhase.Began || touch2.phase == TouchPhase.Began)
+                    {
+                        // Store initial distance for resizing
+                        initialDistance = Vector2.Distance(touch1.position, touch2.position);
+                        initialScale = selectedObject.transform.localScale.x; // Assuming uniform scale
+                        initialTouch1Position = touch1.position;
+                        initialTouch2Position = touch2.position;
+                    }
+                    else if (touch1.phase == TouchPhase.Moved || touch2.phase == TouchPhase.Moved)
+                    {
+                        // Resize the model: Pinch (distance between two touches)
+                        float currentDistance = Vector2.Distance(touch1.position, touch2.position);
+                        float scaleFactor = currentDistance / initialDistance;
+                        selectedObject.transform.localScale = Vector3.one * initialScale * scaleFactor;
+
+                        // Rotate the model: Change in angle between two touches
+                        Vector2 deltaTouch1 = touch1.position - initialTouch1Position;
+                        Vector2 deltaTouch2 = touch2.position - initialTouch2Position;
+
+                        float angle = Vector2.SignedAngle(deltaTouch1, deltaTouch2);
+                        selectedObject.transform.Rotate(Vector3.up, angle, Space.World);
+
+                        // Update initial touch positions for next frame
+                        initialTouch1Position = touch1.position;
+                        initialTouch2Position = touch2.position;
+                    }
+                }
             }
-            else if (touch.phase == TouchPhase.Moved && selectedObject != null)
+            else // If no model is selected, try placing a new model
             {
-                MoveSelectedModel(touch.position);
+                // Handle model placement
+                if (Input.touchCount == 1 && touch1.phase == TouchPhase.Began)
+                {
+                    TryPlaceNewModel(touch1.position);
+                }
+            }
+
+            // Handling model selection and deselection
+            if (Input.touchCount == 1 && touch1.phase == TouchPhase.Began)
+            {
+                // Try to deselect if tapped on empty space or another model
+                if (TryDeselectModel(touch1.position)) return;
+
+                // Try to select a model if tapped on one
+                if (TrySelectPlacedModel(touch1.position)) return;
             }
         }
+    }
+
+    private bool TryDeselectModel(Vector2 touchPosition)
+    {
+        // Raycast to check if the touch is on an empty area (no model hit)
+        Ray ray = arCamera.ScreenPointToRay(touchPosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            // If a model is hit, don't deselect
+            if (hit.collider.CompareTag("ARModel"))
+                return false;
+        }
+
+        // Deselect the current model (if any)
+        ClearPreviousHighlight();
+        selectedObject = null;
+        deleteButton?.gameObject.SetActive(false);
+        return true;
     }
 
     private bool TrySelectPlacedModel(Vector2 touchPosition)
@@ -55,9 +129,9 @@ public class ARRaycastPlace : MonoBehaviour
         {
             if (hit.collider.CompareTag("ARModel"))
             {
-                ClearPreviousHighlight(); // 🔥 Clear previous model highlight
+                ClearPreviousHighlight(); // Clear previous model highlight
                 selectedObject = hit.collider.gameObject;
-                HighlightSelected(selectedObject); // 🔥 Highlight new selected model
+                HighlightSelected(selectedObject); // Highlight new selected model
                 deleteButton?.gameObject.SetActive(true);
                 return true;
             }
@@ -129,7 +203,7 @@ public class ARRaycastPlace : MonoBehaviour
         }
     }
 
-    // 🟡 Highlighting Methods
+    // Highlighting Methods
     private void HighlightSelected(GameObject obj)
     {
         var outline = obj.GetComponent<Outline>();

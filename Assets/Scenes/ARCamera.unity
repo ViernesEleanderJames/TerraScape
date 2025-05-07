@@ -3990,6 +3990,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0b6f0ec1b3d784c4fa39fb741c946a25, type: 2}
   - {fileID: 11400000, guid: 7a0b007e77fabb54ab510bc70cf961c9, type: 2}
   - {fileID: 11400000, guid: cf76107ace312204f915ac2852f0cd09, type: 2}
+  - {fileID: 11400000, guid: dce8a5ec280f1f74bba3e3da07848a55, type: 2}
   decorationModels:
   - {fileID: 11400000, guid: ca142b1976be59d4692ccb9b191eaff1, type: 2}
   - {fileID: 11400000, guid: 6f46334f13de39e4092031886b98c44e, type: 2}
