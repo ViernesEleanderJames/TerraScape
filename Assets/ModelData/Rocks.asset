@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Rocks
   m_EditorClassIdentifier: 
   modelName: Rocks
-  modelImage: {fileID: 0}
-  modelPrefab: {fileID: 2771209512644639089, guid: 379ef1ecda5cf104c879c46a550c7a13, type: 3}
+  modelImage: {fileID: 21300000, guid: b88a0f6de3db2774d984fc94f35458df, type: 3}
+  modelPrefab: {fileID: 3335292646063602569, guid: 7e8e767d9c4ba4547b9d83fd41fac2a7, type: 3}

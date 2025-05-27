@@ -15,9 +15,10 @@ public class ARRaycastPlace : MonoBehaviour
     [SerializeField] private Button deleteButton;
 
     private List<ARRaycastHit> hits = new List<ARRaycastHit>();
-    private GameObject selectedModelPrefab;
-    private GameObject selectedObject;
+    private GameObject selectedModelPrefab; // Prefab selected from UI to be placed
+    private GameObject selectedObject;      // Currently selected object in the scene
 
+    // Variables for touch manipulation (from your original script)
     private float initialDistance;
     private float initialScale;
     private Vector2 initialTouch1Position;
@@ -34,163 +35,169 @@ public class ARRaycastPlace : MonoBehaviour
 
     void Update()
     {
-        if (Input.touchCount > 0)
+        if (Input.touchCount == 0) return;
+
+        Touch touch1 = Input.GetTouch(0);
+        Touch touch2 = (Input.touchCount > 1) ? Input.GetTouch(1) : default(Touch); // Ensure touch2 is properly initialized
+
+        // Ignore touch input if it's on UI
+        // Check fingerId for touch2 only if Input.touchCount > 1 to avoid using default(Touch).fingerId
+        if (EventSystem.current.IsPointerOverGameObject(touch1.fingerId) ||
+            (Input.touchCount > 1 && EventSystem.current.IsPointerOverGameObject(touch2.fingerId)))
         {
-            Touch touch1 = Input.GetTouch(0);
-            Touch touch2 = (Input.touchCount > 1) ? Input.GetTouch(1) : default;
+            return;
+        }
 
-            // Ignore touch input if it's on UI
-            if (EventSystem.current.IsPointerOverGameObject(touch1.fingerId) || (Input.touchCount > 1 && EventSystem.current.IsPointerOverGameObject(touch2.fingerId)))
-                return;
+        // Logic for TouchPhase.Began (Selection, Deselection, or Initiating Placement)
+        if (Input.touchCount == 1 && touch1.phase == TouchPhase.Began)
+        {
+            Ray ray = arCamera.ScreenPointToRay(touch1.position);
+            RaycastHit hitInfo;
+            bool didHitARModel = false;
+            GameObject hitObject = null;
 
-            // Handling touch interactions after selecting a model
-            if (selectedObject != null)
+            if (Physics.Raycast(ray, out hitInfo)) // Ensure models have colliders
             {
-                // Move model with a single touch
-                if (Input.touchCount == 1 && touch1.phase == TouchPhase.Moved)
+                if (hitInfo.collider.CompareTag("ARModel")) // Ensure models are tagged "ARModel"
                 {
-                    MoveSelectedModel(touch1.position);
+                    didHitARModel = true;
+                    hitObject = hitInfo.collider.gameObject;
                 }
+            }
 
-                // Resize or rotate the model with two touches
-                if (Input.touchCount == 2)
+            if (didHitARModel)
+            {
+                // Tapped on an existing AR Model
+                if (selectedObject != hitObject) // If it's a different model
                 {
-                    if (touch1.phase == TouchPhase.Began || touch2.phase == TouchPhase.Began)
+                    ClearPreviousHighlight();
+                    selectedObject = hitObject;
+                    HighlightSelected(selectedObject);
+                    deleteButton?.gameObject.SetActive(true);
+                }
+                // If tapped on the already selected model, do nothing here.
+            }
+            else
+            {
+                // Tapped on empty space (or a non-ARModel object)
+                if (selectedModelPrefab != null)
+                {
+                    // Attempt to place the new model
+                    PlaceNewModelOnARPlaneOnly(touch1.position);
+                }
+                else if (selectedObject != null)
+                {
+                    // No prefab to place, and tapped empty space, so deselect.
+                    ClearPreviousHighlight();
+                    selectedObject = null;
+                    deleteButton?.gameObject.SetActive(false);
+                }
+            }
+        }
+        // Handling touch interactions (Move, Scale, Rotate) if a model is already selected
+        else if (selectedObject != null && Input.touchCount > 0) // Covers Moved, Stationary, Ended phases for 1 or 2 touches
+        {
+            // Move model with a single touch (original logic)
+            if (Input.touchCount == 1 && touch1.phase == TouchPhase.Moved)
+            {
+                MoveSelectedModel(touch1.position);
+            }
+            // Resize or rotate the model with two touches
+            else if (Input.touchCount == 2)
+            {
+                // touch2 would have been fetched at the start of Update if Input.touchCount > 1
+                if (touch1.phase == TouchPhase.Began || touch2.phase == TouchPhase.Began)
+                {
+                    initialDistance = Vector2.Distance(touch1.position, touch2.position);
+                    initialScale = selectedObject.transform.localScale.x; // Assuming uniform scale
+                    initialTouch1Position = touch1.position; // Capture initial positions for rotation logic
+                    initialTouch2Position = touch2.position;
+                }
+                else if (touch1.phase == TouchPhase.Moved || touch2.phase == TouchPhase.Moved)
+                {
+                    // --- Scaling Logic (uses initialDistance and initialScale from Began phase) ---
+                    float currentDistance = Vector2.Distance(touch1.position, touch2.position);
+                    if (initialDistance > Mathf.Epsilon) // Avoid division by zero
                     {
-                        // Store initial distance for resizing
-                        initialDistance = Vector2.Distance(touch1.position, touch2.position);
-                        initialScale = selectedObject.transform.localScale.x; // Assuming uniform scale
-                        initialTouch1Position = touch1.position;
-                        initialTouch2Position = touch2.position;
-                    }
-                    else if (touch1.phase == TouchPhase.Moved || touch2.phase == TouchPhase.Moved)
-                    {
-                        // Resize the model: Pinch (distance between two touches)
-                        float currentDistance = Vector2.Distance(touch1.position, touch2.position);
                         float scaleFactor = currentDistance / initialDistance;
                         selectedObject.transform.localScale = Vector3.one * initialScale * scaleFactor;
-
-                        // Rotate the model: Change in angle between two touches
-                        Vector2 deltaTouch1 = touch1.position - initialTouch1Position;
-                        Vector2 deltaTouch2 = touch2.position - initialTouch2Position;
-
-                        float angle = Vector2.SignedAngle(deltaTouch1, deltaTouch2);
-                        selectedObject.transform.Rotate(Vector3.up, angle, Space.World);
-
-                        // Update initial touch positions for next frame
-                        initialTouch1Position = touch1.position;
-                        initialTouch2Position = touch2.position;
                     }
+
+                    // --- Revised Rotation Logic ---
+                    // Vector connecting the two touches in the PREVIOUS frame (or from Began phase)
+                    Vector2 prevTouchVector = initialTouch2Position - initialTouch1Position; // These are from the last frame or Began
+                    // Vector connecting the two touches in the CURRENT frame
+                    Vector2 currentTouchVector = touch2.position - touch1.position;
+
+                    // Calculate the change in angle of the vector connecting the touches
+                    float angleDelta = Vector2.SignedAngle(prevTouchVector, currentTouchVector);
+
+                    // Apply rotation if the change is significant enough
+                    // You might need to adjust the threshold (e.g., 0.5f or 1.0f)
+                    if (Mathf.Abs(angleDelta) > 1.0f) 
+                    {
+                        // The sign (-angleDelta or angleDelta) might need to be flipped depending on desired rotation intuitiveness
+                        selectedObject.transform.Rotate(Vector3.up, -angleDelta, Space.World); 
+                    }
+                    
+                    // Update touch positions to be used as "previous" positions in the next Moved frame
+                    initialTouch1Position = touch1.position;
+                    initialTouch2Position = touch2.position;
                 }
             }
-            else // If no model is selected, try placing a new model
-            {
-                // Handle model placement
-                if (Input.touchCount == 1 && touch1.phase == TouchPhase.Began)
-                {
-                    TryPlaceNewModel(touch1.position);
-                }
-            }
-
-            // Handling model selection and deselection
-            if (Input.touchCount == 1 && touch1.phase == TouchPhase.Began)
-            {
-                // Try to deselect if tapped on empty space or another model
-                if (TryDeselectModel(touch1.position)) return;
-
-                // Try to select a model if tapped on one
-                if (TrySelectPlacedModel(touch1.position)) return;
-            }
         }
     }
 
-    private bool TryDeselectModel(Vector2 touchPosition)
-    {
-        // Raycast to check if the touch is on an empty area (no model hit)
-        Ray ray = arCamera.ScreenPointToRay(touchPosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            // If a model is hit, don't deselect
-            if (hit.collider.CompareTag("ARModel"))
-                return false;
-        }
-
-        // Deselect the current model (if any)
-        ClearPreviousHighlight();
-        selectedObject = null;
-        deleteButton?.gameObject.SetActive(false);
-        return true;
-    }
-
-    private bool TrySelectPlacedModel(Vector2 touchPosition)
-    {
-        Ray ray = arCamera.ScreenPointToRay(touchPosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            if (hit.collider.CompareTag("ARModel"))
-            {
-                ClearPreviousHighlight(); // Clear previous model highlight
-                selectedObject = hit.collider.gameObject;
-                HighlightSelected(selectedObject); // Highlight new selected model
-                deleteButton?.gameObject.SetActive(true);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void TryPlaceNewModel(Vector2 touchPosition)
+    // This method replaces the part of your old TryPlaceNewModel that dealt with ARPlanes.
+    private void PlaceNewModelOnARPlaneOnly(Vector2 touchPosition)
     {
         if (selectedModelPrefab == null)
             return;
-
-        Ray ray = arCamera.ScreenPointToRay(touchPosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            if (hit.collider.CompareTag("ARModel"))
-            {
-                Transform snapPoint = hit.collider.transform.Find("SnapPoint");
-                if (snapPoint != null)
-                {
-                    GameObject newObject = Instantiate(selectedModelPrefab, snapPoint.position, snapPoint.rotation);
-                    if (newObject.GetComponent<Collider>() == null)
-                        newObject.AddComponent<BoxCollider>();
-                    newObject.tag = "ARModel";
-                }
-                else
-                {
-                    GameObject newObject = Instantiate(selectedModelPrefab, hit.point, Quaternion.identity);
-                    if (newObject.GetComponent<Collider>() == null)
-                        newObject.AddComponent<BoxCollider>();
-                    newObject.tag = "ARModel";
-                }
-                return;
-            }
-        }
 
         if (raycastManager.Raycast(touchPosition, hits, TrackableType.Planes))
         {
             Pose hitPose = hits[0].pose;
             GameObject newObject = Instantiate(selectedModelPrefab, hitPose.position, hitPose.rotation);
+            
+            ARModelInfo modelInfo = newObject.GetComponent<ARModelInfo>();
+            if (modelInfo == null) modelInfo = newObject.AddComponent<ARModelInfo>();
+            modelInfo.prefabName = selectedModelPrefab.name; 
+            
             if (newObject.GetComponent<Collider>() == null)
+            {
                 newObject.AddComponent<BoxCollider>();
+            }
             newObject.tag = "ARModel";
+
+            // Optional: Auto-select the new model. You can uncomment if desired.
+            // ClearPreviousHighlight();
+            // selectedObject = newObject;
+            // HighlightSelected(selectedObject);
+            // deleteButton?.gameObject.SetActive(true);
+            // selectedModelPrefab = null; 
         }
     }
-
+    
     private void MoveSelectedModel(Vector2 touchPosition)
     {
+        if (selectedObject == null) return; 
         if (raycastManager.Raycast(touchPosition, hits, TrackableType.Planes))
         {
             Pose hitPose = hits[0].pose;
             selectedObject.transform.position = hitPose.position;
-            selectedObject.transform.rotation = hitPose.rotation;
+            selectedObject.transform.rotation = hitPose.rotation; 
         }
     }
 
     public void SetSelectedModel(GameObject modelPrefab)
     {
         selectedModelPrefab = modelPrefab;
+        // if (selectedObject != null)
+        // {
+        //     ClearPreviousHighlight();
+        //     selectedObject = null;
+        //     deleteButton?.gameObject.SetActive(false);
+        // }
     }
 
     public void DeleteSelectedObject()
@@ -203,12 +210,12 @@ public class ARRaycastPlace : MonoBehaviour
         }
     }
 
-    // Highlighting Methods
     private void HighlightSelected(GameObject obj)
     {
+        if (obj == null) return; 
         var outline = obj.GetComponent<Outline>();
-        if (outline != null)
-            outline.enabled = true;
+        if (outline == null) outline = obj.AddComponent<Outline>(); 
+        outline.enabled = true;
     }
 
     private void ClearPreviousHighlight()

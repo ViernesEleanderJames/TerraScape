@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Pathway
   m_EditorClassIdentifier: 
   modelName: Pathway
-  modelImage: {fileID: 0}
-  modelPrefab: {fileID: 9075792619742501261, guid: ee892f63c33ab5d4ca69d2b6a9bea3d6, type: 3}
+  modelImage: {fileID: 21300000, guid: dcbda8fd4e77609429b7f711686f4770, type: 3}
+  modelPrefab: {fileID: 2791149917195892182, guid: 269ed6ad664b03c4cbc0768ceade8630, type: 3}

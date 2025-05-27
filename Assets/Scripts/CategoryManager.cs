@@ -20,6 +20,18 @@ public class CategoryManager : MonoBehaviour
     [SerializeField] private List<ModelDataSO> furnitureModels;
     [SerializeField] private List<ModelDataSO> groundCoverModels;
 
+    public List<ModelDataSO> GetAllModels()
+    {
+        List<ModelDataSO> allModels = new List<ModelDataSO>();
+        if (plantModels != null) allModels.AddRange(plantModels); //
+        if (decorationModels != null) allModels.AddRange(decorationModels); //
+        if (structureModels != null) allModels.AddRange(structureModels); //
+        if (pathwayModels != null) allModels.AddRange(pathwayModels); //
+        if (furnitureModels != null) allModels.AddRange(furnitureModels); //
+        if (groundCoverModels != null) allModels.AddRange(groundCoverModels); //
+        return allModels;
+    }
+
     private void Awake()
     {
         if (modelScrollManager != null)

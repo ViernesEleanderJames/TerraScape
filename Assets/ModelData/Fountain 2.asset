@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Fountain 2
   m_EditorClassIdentifier: 
   modelName: Fountain 2
-  modelImage: {fileID: 0}
-  modelPrefab: {fileID: 3196041261167224198, guid: 40d6e7f07e1b4314aa4e408fdfbc3d0b, type: 3}
+  modelImage: {fileID: 21300000, guid: 5ef483f50aaca874a800e4d428dbb86e, type: 3}
+  modelPrefab: {fileID: 5799256907250590169, guid: d25ac04247e37ae418873141ca9dfcc6, type: 3}
