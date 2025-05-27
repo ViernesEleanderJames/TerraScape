@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelName: Round Bush
   modelImage: {fileID: 21300000, guid: eba2c71ee721e5f4194dde63e75bb413, type: 3}
-  modelPrefab: {fileID: 8705329798272532187, guid: 2ae79c9ef37715b418ca52c129b9e817, type: 3}
+  modelPrefab: {fileID: 6573664527483881916, guid: d04307fd240fe3a4cb35ecae0e1379b0, type: 3}

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Kalachuchi
   m_EditorClassIdentifier: 
   modelName: Kalachuchi
-  modelImage: {fileID: 21300000, guid: 5ac41bbf2e1e9d74c98ef52559666a44, type: 3}
-  modelPrefab: {fileID: 2551959765375579601, guid: 2f114cbb2977f934fa7dab2a2bc80bce, type: 3}
+  modelImage: {fileID: 0}
+  modelPrefab: {fileID: 6442169684150432584, guid: 782b8240c79cfbe4ab8bfd0ed7b8b036, type: 3}

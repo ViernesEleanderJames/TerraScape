@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelName: Table Set 1
   modelImage: {fileID: 21300000, guid: d516a2f34ef35a14c9491d4ede46f841, type: 3}
-  modelPrefab: {fileID: 4596042548535949548, guid: 70dee8b600bb61e4fa7f99e92caa2095, type: 3}
+  modelPrefab: {fileID: 2801261232875715320, guid: 3e9efa858ac4dc54ba0bd1f51653ed79, type: 3}

@@ -3,77 +3,7 @@ guid: 22eac3d78f1966945b6331c3114d3553
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Leaves
-    second: {fileID: 2100000, guid: fac4bb3131d79a34cb2ffbff8ea067fc, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Leaves.004
-    second: {fileID: 2100000, guid: bf8033ac36afad24ea244119e12db1ff, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Leaves.005
-    second: {fileID: 2100000, guid: 723cd5ee9b1c1bd44a92055bda4eb6bc, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Leaves.006
-    second: {fileID: 2100000, guid: 80b0db2966653a64498e10dcc8eabb62, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Leaves.007
-    second: {fileID: 2100000, guid: e73dbfe33ad6796439d462be22c61d27, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Leaves.008
-    second: {fileID: 2100000, guid: de2cd2a67432d3640a16f3f1f551352f, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Leaves.009
-    second: {fileID: 2100000, guid: 3fcd5f1e82852a24cb2a3f637013b0d9, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Leaves.010
-    second: {fileID: 2100000, guid: 1977513bdc4602846b879ab0b1a36738, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Leaves.011
-    second: {fileID: 2100000, guid: b266deb3981764843bf712f705c91c4c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.004
-    second: {fileID: 2100000, guid: 285b1fe1cb3debf45ac9f1626286b1fd, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.005
-    second: {fileID: 2100000, guid: 4e4a884bff1c62c4aaa674bc6e286518, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.006
-    second: {fileID: 2100000, guid: c0471c3a328b0a24a85d5552bac53c46, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: images (3)
-    second: {fileID: 2800000, guid: fdc05ba75aa947b4db403b87a58d0ab7, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: photo_2025-05-02_06-30-53
-    second: {fileID: 2800000, guid: be2e46b1ad385c942aa2b243ff9a9689, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

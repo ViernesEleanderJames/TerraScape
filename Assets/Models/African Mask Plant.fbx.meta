@@ -3,67 +3,7 @@ guid: e3e04db97c8ec2a4d9cfe6e119aeb946
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: c5a9a647f2864674da58f3150388381f, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.002
-    second: {fileID: 2100000, guid: 4712a248dc295f1498b2ced78efc7d49, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.003
-    second: {fileID: 2100000, guid: a516be3f03d82c54bb11eb42a3c35675, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.004
-    second: {fileID: 2100000, guid: ce12350bb30036f4a98358a12c71d5a2, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.005
-    second: {fileID: 2100000, guid: 2223f0ec846ae1c4591df04d84b1f899, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.006
-    second: {fileID: 2100000, guid: 4e876470d55b63d4abc0ddfddf772ce7, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.007
-    second: {fileID: 2100000, guid: 16cbeb47cfcfb0f4b8b1ac4d1599c067, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.008
-    second: {fileID: 2100000, guid: 6ceaae11cd93ea3498cf60d02293fefd, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: clay-pot-texture-600nw-326415116
-    second: {fileID: 2800000, guid: 47a0e4d5f04df944a9d343e6847bcfb2, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: images (3)
-    second: {fileID: 2800000, guid: 24afcea71b036af489232310654b71cc, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: photo_2025-05-08_12-28-36
-    second: {fileID: 2800000, guid: bb688ca62611f0347a9a78ae5cf1de76, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: photo_2025-05-08_12-28-37
-    second: {fileID: 2800000, guid: 17273f281e57b9b48a33bf88a47d6ff6, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

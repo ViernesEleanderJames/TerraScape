@@ -5339,9 +5339,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4938f3f954a901d46858825080a986d6, type: 2}
   - {fileID: 11400000, guid: 5b726b402f1d4bd459eaeb2786f61415, type: 2}
   - {fileID: 11400000, guid: 062fdcdbdf844b749a2fd6b65df0049b, type: 2}
+  - {fileID: 11400000, guid: ebac3438d1fad1f40933919831f27f8e, type: 2}
+  - {fileID: 11400000, guid: 44748544417c1044487fd997a3a90c3f, type: 2}
   decorationModels:
   - {fileID: 11400000, guid: 4ff406f0af8bf6340beed2b7fbb2f7ef, type: 2}
   - {fileID: 11400000, guid: 5fcfd5513d6a890459917cb5032b354c, type: 2}
+  - {fileID: 11400000, guid: 0fda4bf0d583f0e44872fc5cdd39132d, type: 2}
+  - {fileID: 11400000, guid: f25381664d1a9df4c8b3423de0d573c8, type: 2}
+  - {fileID: 11400000, guid: d3e4a113cefe1074ebb3fc12f2fb5532, type: 2}
   structureModels:
   - {fileID: 11400000, guid: 833ab309dd44a01418f6d874b9bdd3dc, type: 2}
   - {fileID: 11400000, guid: 272140f13aa47984094fb8ba1c8b0c60, type: 2}
@@ -5350,6 +5355,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 946470ad134dadc459e695d995fb2564, type: 2}
   furnitureModels:
   - {fileID: 11400000, guid: 222607ea10cf4ca4c88ad51280523250, type: 2}
+  - {fileID: 11400000, guid: c3facef222be35845aa3c35e94f145e8, type: 2}
   groundCoverModels: []
 --- !u!4 &1505310431
 Transform:

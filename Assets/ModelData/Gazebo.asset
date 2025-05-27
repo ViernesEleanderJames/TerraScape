@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelName: Gazebo
   modelImage: {fileID: 21300000, guid: 5e40e5f4e3ab61548b78aad426ffad2e, type: 3}
-  modelPrefab: {fileID: 2470216630400503176, guid: dfeec4b4db75ade459503d8ad0a31ab5, type: 3}
+  modelPrefab: {fileID: 138584654202592495, guid: bf55443a35f34ee4b92157022730cd14, type: 3}
