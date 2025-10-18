@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f670137ffb621941b9714cbfbead799, type: 3}
+  m_Name: TableSet5
+  m_EditorClassIdentifier: 
+  modelName: Table Set 5
+  modelImage: {fileID: 21300000, guid: 121fb48cb71d9574da9c53bdd05d5aac, type: 3}
+  modelPrefab: {fileID: 2005209229914489140, guid: e4f044d3df5b13f459796a6e3b01314b, type: 3}
+  hasPot: 0

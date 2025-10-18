@@ -3,47 +3,48 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
-using UnityEngine.UI;
+using UnityEngine.UI; 
 
 public class ARRaycastPlace : MonoBehaviour
 {
     [Header("AR Components")]
-    public ARRaycastManager raycastManager;
-    public Camera arCamera;
+    public ARRaycastManager raycastManager; // handles ar raycasts to detect planes
+    public Camera arCamera; // main ar camera
 
     [Header("UI Components")]
-    [SerializeField] private Button deleteButton;
+    [SerializeField] private Button deleteButton; // delete button for removing placed models
 
     private List<ARRaycastHit> hits = new List<ARRaycastHit>();
-    private GameObject selectedModelPrefab; // Prefab selected from UI to be placed
-    private GameObject selectedObject;      // Currently selected object in the scene
+    private GameObject selectedModelPrefab; // model picked from ui to place
+    private GameObject selectedObject;      // model currently selected in scene
 
-    // Variables for touch manipulation
+    // touch controls for scaling and rotating
     private float initialDistance;
     private float initialScale;
     private Vector2 initialTouch1Position;
     private Vector2 initialTouch2Position;
 
-    // New flag to track if placement is primed by a UI selection
+    // true if a model was just selected from ui for placement
     private bool justSelectedPrefabFromUI = false;
 
     private void Start()
     {
         if (deleteButton != null)
         {
-            deleteButton.gameObject.SetActive(false);
-            deleteButton.onClick.AddListener(DeleteSelectedObject);
+            deleteButton.gameObject.SetActive(false); // hide delete button on start
+            deleteButton.onClick.AddListener(DeleteSelectedObject); // connect delete button event
         }
     }
 
     public void SetSelectedModel(GameObject modelPrefab)
     {
-        // If the same model button is clicked again, re-prime it for placement
+        // same model clicked again = re-prime for placement
         if (selectedModelPrefab == modelPrefab && modelPrefab != null)
         {
-            justSelectedPrefabFromUI = true; // Re-prime for placement
+            justSelectedPrefabFromUI = true;
             Debug.Log("Re-primed " + modelPrefab.name + " for placement.");
-            // Ensure scene object is deselected if re-priming
+
+            // remove highlight if an object was selected
             if (selectedObject != null)
             {
                 ClearPreviousHighlight();
@@ -51,14 +52,16 @@ public class ARRaycastPlace : MonoBehaviour
                 deleteButton?.gameObject.SetActive(false);
             }
         }
-        else // Different model selected or clearing selection
+        else // new model selected or cleared
         {
             selectedModelPrefab = modelPrefab;
             if (modelPrefab != null)
             {
-                justSelectedPrefabFromUI = true; // Prime for placement
+                justSelectedPrefabFromUI = true;
                 Debug.Log("Model for placement selected: " + modelPrefab.name);
-                if (selectedObject != null) // If a scene object was selected, deselect it
+
+                // deselect any highlighted object
+                if (selectedObject != null)
                 {
                     ClearPreviousHighlight();
                     selectedObject = null;
@@ -67,7 +70,7 @@ public class ARRaycastPlace : MonoBehaviour
             }
             else
             {
-                justSelectedPrefabFromUI = false; // Clearing selection
+                justSelectedPrefabFromUI = false;
                 Debug.Log("Model for placement cleared.");
             }
         }
@@ -80,12 +83,14 @@ public class ARRaycastPlace : MonoBehaviour
         Touch touch1 = Input.GetTouch(0);
         Touch touch2 = (Input.touchCount > 1) ? Input.GetTouch(1) : default(Touch);
 
+        // ignore touches on ui
         if (EventSystem.current.IsPointerOverGameObject(touch1.fingerId) ||
             (Input.touchCount > 1 && EventSystem.current.IsPointerOverGameObject(touch2.fingerId)))
         {
             return;
         }
 
+        // handle tap
         if (Input.touchCount == 1 && touch1.phase == TouchPhase.Began)
         {
             Ray ray = arCamera.ScreenPointToRay(touch1.position);
@@ -95,7 +100,7 @@ public class ARRaycastPlace : MonoBehaviour
 
             if (Physics.Raycast(ray, out hitInfo))
             {
-                if (hitInfo.collider.CompareTag("ARModel")) //
+                if (hitInfo.collider.CompareTag("ARModel")) // check if we tapped an ar model
                 {
                     didHitARModel = true;
                     hitObject = hitInfo.collider.gameObject;
@@ -104,7 +109,7 @@ public class ARRaycastPlace : MonoBehaviour
 
             if (didHitARModel)
             {
-                // Tapped on an existing AR Model
+                // tap selects an existing model
                 if (selectedObject != hitObject)
                 {
                     ClearPreviousHighlight();
@@ -113,7 +118,7 @@ public class ARRaycastPlace : MonoBehaviour
                     deleteButton?.gameObject.SetActive(true);
                 }
 
-                // Tapping any placed model cancels "placement intent" and clears selected prefab
+                // clear prefab selection if we tapped a model
                 if (selectedModelPrefab != null)
                 {
                     selectedModelPrefab = null;
@@ -121,31 +126,30 @@ public class ARRaycastPlace : MonoBehaviour
                     Debug.Log("Tapped placed model, cleared UI prefab selection.");
                 }
             }
-            else // Tapped on empty space (or a non-ARModel object)
+            else // tapped empty plane
             {
                 if (justSelectedPrefabFromUI && selectedModelPrefab != null)
                 {
-                    // User just selected a prefab from UI, this tap is for PLACEMENT
+                    // just selected from ui → place model
                     PlaceNewModelOnARPlaneOnly(touch1.position);
-                    // PlaceNewModelOnARPlaneOnly will now set selectedModelPrefab = null
-                    // and justSelectedPrefabFromUI = false after successful placement.
                 }
-                else if (selectedModelPrefab != null) // A prefab is selected, but not "just from UI" (e.g., placement failed or it's a later tap)
+                else if (selectedModelPrefab != null)
                 {
-                    // This tap is for DESELECTING the UI prefab
+                    // deselect prefab
                     Debug.Log("Tapped empty space. Deselecting UI prefab: " + selectedModelPrefab.name);
                     selectedModelPrefab = null;
-                    justSelectedPrefabFromUI = false; // Ensure this is reset
+                    justSelectedPrefabFromUI = false;
                 }
-                else if (selectedObject != null) // No UI prefab active, so deselect any highlighted scene object
+                else if (selectedObject != null)
                 {
+                    // clear selected object
                     ClearPreviousHighlight();
                     selectedObject = null;
                     deleteButton?.gameObject.SetActive(false);
                 }
             }
         }
-        else if (selectedObject != null && Input.touchCount > 0) // Handle multi-touch for selected scene objects
+        else if (selectedObject != null && Input.touchCount > 0) // move, scale, rotate
         {
             if (Input.touchCount == 1 && touch1.phase == TouchPhase.Moved)
             {
@@ -169,6 +173,7 @@ public class ARRaycastPlace : MonoBehaviour
                         selectedObject.transform.localScale = Vector3.one * initialScale * scaleFactor;
                     }
 
+                    // rotation gesture
                     Vector2 prevTouchVector = initialTouch2Position - initialTouch1Position;
                     Vector2 currentTouchVector = touch2.position - touch1.position;
                     float angleDelta = Vector2.SignedAngle(prevTouchVector, currentTouchVector);
@@ -177,7 +182,7 @@ public class ARRaycastPlace : MonoBehaviour
                     {
                         selectedObject.transform.Rotate(Vector3.up, -angleDelta, Space.World);
                     }
-                    
+
                     initialTouch1Position = touch1.position;
                     initialTouch2Position = touch2.position;
                 }
@@ -194,27 +199,28 @@ public class ARRaycastPlace : MonoBehaviour
             Pose hitPose = hits[0].pose;
             GameObject newObject = Instantiate(selectedModelPrefab, hitPose.position, hitPose.rotation);
             
+            // attach model info for saving/loading
             ARModelInfo modelInfo = newObject.GetComponent<ARModelInfo>();
             if (modelInfo == null) modelInfo = newObject.AddComponent<ARModelInfo>();
             modelInfo.prefabName = selectedModelPrefab.name; 
             
+            // add collider if missing
             if (newObject.GetComponent<Collider>() == null)
             {
                 newObject.AddComponent<BoxCollider>();
             }
-            newObject.tag = "ARModel"; //
+            newObject.tag = "ARModel"; // tag it as ar model
 
-            // Enforce "one placement per UI click" and clear selection to enable
-            // "tap empty plane to deselect" behavior for subsequent states.
+            // reset selection after placement
             selectedModelPrefab = null;
-            justSelectedPrefabFromUI = false; // Reset placement intent flag
+            justSelectedPrefabFromUI = false;
             Debug.Log("Placed model and cleared selectedModelPrefab.");
         }
         else
         {
-            // Optional: If placement fails (no plane), reset the intent flag so the next tap deselects.
+            // no plane found
             justSelectedPrefabFromUI = false;
-            Debug.Log("Placement failed (no plane hit), placement intent flag reset. Next empty plane tap will deselect UI choice if any.");
+            Debug.Log("Placement failed (no plane hit), placement intent flag reset.");
         }
     }
     

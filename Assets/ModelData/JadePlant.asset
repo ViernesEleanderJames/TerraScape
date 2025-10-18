@@ -15,3 +15,4 @@ MonoBehaviour:
   modelName: Jade Plant
   modelImage: {fileID: 21300000, guid: 01d94ac221250994cb2e612bbcf30dfa, type: 3}
   modelPrefab: {fileID: 2558256833090694615, guid: 3f3c2ee7355801a4e95f2288723772d6, type: 3}
+  hasPot: 1

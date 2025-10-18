@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f670137ffb621941b9714cbfbead799, type: 3}
+  m_Name: Ixora Plant Bush
+  m_EditorClassIdentifier: 
+  modelName: Ixora Plant Bush
+  modelImage: {fileID: 21300000, guid: 4200eed131fb8864aa87fbcc9fd0fd66, type: 3}
+  modelPrefab: {fileID: 4455426306865839500, guid: ce989cd2898f95047b3b1ae6997a6463, type: 3}

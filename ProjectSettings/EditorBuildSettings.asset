@@ -11,6 +11,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ARCamera.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/HomeScreen.unity
+    guid: b0d58162da15ccb4597fefaf370ce1c8
+  - enabled: 1
+    path: Assets/Scenes/ARMeasurement.unity
+    guid: 3e6f2a8e646ba2240961d128a290b66a
+  - enabled: 0
+    path: Assets/Scenes/Album Page.unity
+    guid: 478e8569a5f0a9141bb0931a79fa4136
+  - enabled: 1
+    path: Assets/Scenes/About Us.unity
+    guid: 1c9f7a364b5d2b540bef739ba93a180e
+  - enabled: 1
+    path: Assets/Scenes/AlbumScene.unity
+    guid: 2dc931cb65357684f8a944fb895b2a95
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 03062c4871d466648977990dedbdc983, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: c31639b5bb0086e44ac3b2e85c5d421b, type: 2}

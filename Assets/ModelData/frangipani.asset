@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f670137ffb621941b9714cbfbead799, type: 3}
+  m_Name: frangipani
+  m_EditorClassIdentifier: 
+  modelName: Frangipani
+  modelImage: {fileID: 21300000, guid: 27a031187d4822c40bbd888bd94c79a2, type: 3}
+  modelPrefab: {fileID: 7590761074889872284, guid: 9efa0ec42d2677d4c90a1ab085547900, type: 3}
