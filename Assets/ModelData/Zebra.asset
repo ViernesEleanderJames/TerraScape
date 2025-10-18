@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f670137ffb621941b9714cbfbead799, type: 3}
+  m_Name: Zebra
+  m_EditorClassIdentifier: 
+  modelName: Zibra Plant
+  modelImage: {fileID: 21300000, guid: 50cb9150fc0f7504287d45e684a75f1b, type: 3}
+  modelPrefab: {fileID: 5817533660546661508, guid: e413baf8f147d6a40a63562b23ae1065, type: 3}
+  hasPot: 1

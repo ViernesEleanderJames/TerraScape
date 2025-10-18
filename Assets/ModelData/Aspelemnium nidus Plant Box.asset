@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f670137ffb621941b9714cbfbead799, type: 3}
+  m_Name: Aspelemnium nidus Plant Box
+  m_EditorClassIdentifier: 
+  modelName: Aspelemnium nidus Plant Box
+  modelImage: {fileID: 21300000, guid: e338a05d6cfe9c747b503a1839881d96, type: 3}
+  modelPrefab: {fileID: 2890927752930800285, guid: 1c9903fde73554d4d8bc403dd5b0991c, type: 3}
+  hasPot: 1

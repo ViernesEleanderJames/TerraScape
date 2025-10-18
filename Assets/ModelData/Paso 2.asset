@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f670137ffb621941b9714cbfbead799, type: 3}
+  m_Name: Paso 2
+  m_EditorClassIdentifier: 
+  modelName: Paso 2
+  modelImage: {fileID: 21300000, guid: 87ea28a5d9145934db9305ac9102d1dd, type: 3}
+  modelPrefab: {fileID: 5822072089288909308, guid: 882f3377d95ea834aa19fbe8a5d09929, type: 3}

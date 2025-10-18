@@ -6,5 +6,6 @@ public class ModelDataSO : ScriptableObject
     public string modelName;
     public Sprite modelImage; // Ensure this field exists
     public GameObject modelPrefab;
+    public bool hasPot; // Add this line
 }
 

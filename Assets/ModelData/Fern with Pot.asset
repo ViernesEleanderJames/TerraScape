@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f670137ffb621941b9714cbfbead799, type: 3}
+  m_Name: Fern with Pot
+  m_EditorClassIdentifier: 
+  modelName: Fern with Pot
+  modelImage: {fileID: 21300000, guid: 9a63cd40196d5c847ac421b43e80f3ea, type: 3}
+  modelPrefab: {fileID: 1565247755139015260, guid: e15cafccae63d6c4ab6d66ca63c6b248, type: 3}
+  hasPot: 1
