@@ -1,4 +1,3 @@
-repository "TerraScape 2025-03-17_19-34-39/TerraScape@18967879657185@cloud"
+rep "TerraScape 2025-03-17_19-34-39/TerraScape@18967879657185@cloud"
   path "/"
-    br "/main"
-    co "/main"
+    smartbranch "/main"
